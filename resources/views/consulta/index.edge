@@ -1,0 +1,44 @@
+@layout('layouts/master')
+
+@section('main')
+  @if(flashMessages.has('success'))
+    <div class="alert alert-success" role="alert">
+      {{ flashMessages.get('success') }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th scope="col">REFERÊNCIA</th>
+        <th scope="col">CRITÉRIO</th>
+        <th scope="col">CNPJ</th>
+        <th scope="col">EMPRESA</th>
+        <th scope="col">CONSULTADO</th>
+        <th scope="col">STATUS</th>
+      </tr>
+    </thead>
+    <tbody>
+      @each(registro in registros)
+        <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+          <td>{{ registro.codigoReferencia }}</td>
+          <td>{{ registro.criterio }}</td>
+          <td>{{ registro.documentoCliente }}</td>
+          <td>{{ registro.nomeCliente }}</td>
+          @if(registro.people.length > 0)
+            @each(item in registro.people)
+            <td>{{ item.nome }}</td>
+            @endeach
+          @else
+            @each(item in registro.vehicles)
+              <td>{{ item.placa }}</td>
+            @endeach
+          @endif
+          <td><span class="badge badge-primary">{{ registro.status }}</span></td>
+        </tr>
+      @endeach
+    </tbody>
+  </table>
+@endsection

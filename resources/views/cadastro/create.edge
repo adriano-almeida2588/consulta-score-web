@@ -1,0 +1,188 @@
+@layout('layouts/master')
+
+@section('main')
+<div class="card">
+  <div class="card-header">
+    FORMULÁRIO DE PESQUISA {{ criterio.toUpperCase() }}
+  </div>
+  <div class="card-body">
+		<form action="{{ route('RecordsController.store') }}" method="POST" novalidate>
+			<div class="form-row">
+				{{--  <div class="form-group col-md-6">
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="pessoaFisica" name="pessoaFisica" class="custom-control-input">
+						<label class="custom-control-label" for="pessoaFisica">Pessoa Física</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="pessoaJuridica" name="pessoaFisica" class="custom-control-input">
+						<label class="custom-control-label" for="pessoaJuridica">Pessoa Jurídica</label>
+					</div>
+				</div>  --}}
+				{{--  <div class="form-group col-md-3">
+					<label for="criterio"></label>
+					<select class="form-control" required id="criterio" name="criterio">
+						<option>Política Autônomo</option>
+						<option>Política Agregado</option>
+						<option>Política Frota</option>
+						<option>Política Individual</option>
+						<option>Política Veículo</option>
+						</select>
+				</div>  --}}
+				{{--  <div class="form-group col-md-6">
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="isConsultaMotorista" name="isConsultaMotorista" class="custom-control-input">
+						<label class="custom-control-label" for="isConsultaMotorista">CONSULTA MOTORISTA</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="isConsultaAjudante" name="isConsultaMotorista" class="custom-control-input">
+						<label class="custom-control-label" for="isConsultaAjudante">CONSULTA AJUDANTE / AUXILIAR</label>
+					</div>
+				</div>  --}}
+			<input type="hidden" id="criterio" name="criterio" value="{{ criterio }}">
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-3">
+					<label for="cpf">CPF</label>
+					<input type="text" class="form-control" required id="cpf" name="cpf" placeholder="">
+					@if(flashMessages.has('messages.cpf'))
+						{{ flashMessages.get('messages.cpf') }}
+					@endif
+				</div>
+				<div class="form-group col-md-3">
+					<label for="rg">RG</label>
+					<input type="text" class="form-control" required id="rg" name="rg" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="rgEmissor">Emissor</label>
+					<input type="text" class="form-control" id="rgEmissor" name="rgEmissor" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="ufEmissor">UF Emissor</label>
+					<input type="text" class="form-control" required id="ufEmissor" name="ufEmissor" placeholder="">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="nome">Nome</label>
+					<input type="text" class="form-control" id="nome" name="nome" placeholder="">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="nomeMae">Nome da mãe</label>
+					<input type="text" class="form-control" required id="nomeMae" name="nomeMae" placeholder="">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="nomePai">Nome do pai</label>
+					<input type="text" class="form-control" id="nomePai" name="nomePai" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="dataNascimento">Data de Nascimento</label>
+					<input type="text" class="form-control" required id="dataNascimento" name="dataNascimento" placeholder="">
+				</div>
+				{{--  <div class="form-group col-md-3 align-self-center">
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="masculino" name="sexo" class="custom-control-input">
+						<label class="custom-control-label" for="masculino">Masculino</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="femenimo" name="sexo" class="custom-control-input">
+						<label class="custom-control-label" for="femenimo">Femenino</label>
+					</div>
+				</div>  --}}
+				<div class="form-group col-md-3 align-self-center">
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="masculino" name="sexo" value="MASCULINO" class="custom-control-input">
+						<label class="custom-control-label" for="masculino">Masculino</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input type="radio" id="feminino" name="sexo" value="FEMININO" class="custom-control-input">
+						<label class="custom-control-label" for="feminino">Feminino</label>
+					</div>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="cnh">CNH</label>
+					<input type="text" class="form-control" required id="cnh" name="cnh" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="ufCNH">UF CNH</label>
+					<input type="text" class="form-control" required id="ufCNH" name="ufCNH" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="habilitacao_1">CNH 1° Habilitação</label>
+					<input type="text" class="form-control" required id="habilitacao_1" name="habilitacao_1" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="cnhValidade">CNH Validade</label>
+					<input type="text" class="form-control" required id="cnhValidade" name="cnhValidade" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="cnhEmissao">CNH Emissão</label>
+					<input type="text" class="form-control" required id="cnhEmissao" name="cnhEmissao" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="cnhCategoria">CNH Categoria</label>
+					<select class="form-control" required id="cnhCategoria" name="cnhCategoria">
+						<option>A</option>
+						<option>B</option>
+						<option>C</option>
+						<option>D</option>
+						<option>E</option>
+						<option>AB</option>
+						<option>AC</option>
+						<option>AD</option>
+						<option>AE</option>
+						</select>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="codigoSeguranca">CNH Segurança</label>
+					<input type="text" class="form-control" required id="codigoSeguranca" name="codigoSeguranca" placeholder="">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="telefone">Telefone</label>
+					<input type="tel" class="form-control" id="telefone" name="telefone" placeholder="">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-3">
+					<label for="celular">Celular</label>
+					<input type="tel" class="form-control" id="celular" name="celular" placeholder="">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="email">Email</label>
+					<input type="email" class="form-control" id="email" name="email" placeholder="">
+				</div>
+			</div>
+			<div class="form-group">
+				<button type="button" id="adicionar_veiculo_1" class="btn btn-primary btn-large"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+					</svg>
+					Adicionar Veículo</button>
+				</div>
+			<div class="form-group">
+				<button type="button" id="adicionar_proprietario_1" class="btn btn-primary btn-large"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+					<path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+					</svg>
+					Adicionar Proprietário</button>
+			</div>
+			<div id="div_veiculo_1">
+				@include('partials/form_vehicle_1')
+			</div>
+			<div id="div_veiculo_2">
+				@include('partials/form_vehicle_2')
+			</div>
+			<div id="div_veiculo_3">
+				@include('partials/form_vehicle_3')
+			</div>
+			<div id="div_proprietario_1">
+				@include('partials/form_owner_1')
+			</div>
+			<div id="div_proprietario_2">
+				@include('partials/form_owner_2')
+			</div>
+			<div id="div_proprietario_3">
+				@include('partials/form_owner_3')
+			</div>
+			<button type="submit" class="btn btn-success">Salvar e Enviar</button>
+		</form>
+  </div>
+</div>
+@endsection
